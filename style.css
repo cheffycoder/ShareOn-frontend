@@ -1,162 +1,155 @@
-:root{
-    /* --main-bg-color: #eff5fe; */
-    --main-bg-color: #fffef4;
-    /* --border-color: #0288d147; */
-    --border-color: #fac53b;
-    --container-width: 500px;
-    /* --light-yellow: #fac53b;
+:root {
+  /* --main-bg-color: #eff5fe; */
+  --main-bg-color: #fffef4;
+  /* --border-color: #0288d147; */
+  --border-color: #fac53b;
+  --container-width: 500px;
+  /* --light-yellow: #fac53b;
     --dark-yellow: #fbb440; */
 }
 
-body, html{
-    font-family: system-ui;
-    background: var(--main-bg-color);
-    /* Default height is not zero and also default padding comes in body */
-    height: 100%; 
-    padding: 0;
-    margin: 0;
+body,
+html {
+  font-family: system-ui;
+  background: var(--main-bg-color);
+  /* Default height is not zero and also default padding comes in body */
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-body, .drop-zone, .upload-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+body,
+.drop-zone,
+.upload-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .logo {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 250px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 250px;
 }
 
-.upload-container{
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 20px 20px #0000002e;
+.upload-container {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 20px 20px #0000002e;
 }
 
-
-.drop-zone{
-    width: var(--container-width);
-    min-height: 200px;
-    border: 2px dashed var(--border-color); 
-    margin:  30px;
-    border-radius: 10px;
-    transition: all .2s ease;
+.drop-zone {
+  width: var(--container-width);
+  min-height: 200px;
+  border: 2px dashed var(--border-color);
+  margin: 30px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
 }
 
-
-.dragged.drop-zone{
-    background: var(--main-bg-color);
-    /* border-color: #2196f3; */
-    border-color: #fbb440;
+.dragged.drop-zone {
+  background: var(--main-bg-color);
+  /* border-color: #2196f3; */
+  border-color: #fbb440;
 }
 
-.icon-container{
-    width: 75px;
-    height: 100px;
-    position: relative;
+.icon-container {
+  width: 75px;
+  height: 100px;
+  position: relative;
 }
 
-.icon-container img{
-    width: 75px;
-    position: absolute;
-    
-    /*  This is to do the animation, transform-origin by default is from center
+.icon-container img {
+  width: 75px;
+  position: absolute;
+
+  /*  This is to do the animation, transform-origin by default is from center
         Thus, changing it to bottom.
 
         Adding transition to transform with time .25s or 250ms, and animation type as ease-in-out
     */
-    transform-origin: bottom;
-    transition: transform 250ms ease-in-out;
+  transform-origin: bottom;
+  transition: transform 250ms ease-in-out;
 }
 
-.icon-container .center{
-    z-index: 2;
+.icon-container .center {
+  z-index: 2;
 }
 
-.icon-container .left .right{
-    filter: grayscale(5);
+.icon-container .left .right {
+  filter: grayscale(5);
 }
 
-/* 
-    Will add this dragged class later on with the help of JS.
-*/
-.dragged .icon-container .right{
-    transform: rotate(10deg) translateX(20px) scale(.9);
+/*  Will add this dragged class later on with the help of JS */
+.dragged .icon-container .right {
+  transform: rotate(10deg) translateX(20px) scale(0.9);
 }
 
-.dragged .icon-container .left{
-    transform: rotate(-10deg) translateX(-20px) scale(.9);
+.dragged .icon-container .left {
+  transform: rotate(-10deg) translateX(-20px) scale(0.9);
 }
 
-.dragged .icon-container .center{
-    /* To move the center file a bit up on once dragged is hit */
-    transform: translateY(-5px);
+.dragged .icon-container .center {
+  /* To move the center file a bit up on once dragged is hit */
+  transform: translateY(-5px);
 }
 
-#file-input{
-    display: none;
+#file-input {
+  display: none;
 }
 
-.browse-button{
-    /* color: #2196f3; */
-    color:#fac53b;
-    cursor: pointer;
+.browse-button {
+  color: #fac53b;
+  cursor: pointer;
 }
 
+.progress-container {
+  width: var(--container-width);
+  height: 70px;
+  border: 2px solid var(--main-bg-color);
+  margin-bottom: 25px;
+  border-radius: 10px;
 
-.progress-container{
-    width: var(--container-width);
-    height: 70px;
-    border: 2px solid var(--main-bg-color);
-    margin-bottom: 25px;
-    border-radius: 10px;
-
-    position: relative;
-    display: none;
+  position: relative;
+  display: none;
 }
 
-.progress-container .bg-progress{
-    background: var(--main-bg-color);
-    height: 100%;
+.progress-container .bg-progress {
+  background: var(--main-bg-color);
+  height: 100%;
 
-    /* We are making a progress bar, and when scaleX is used it starts from center but we want it from start */
-    /* transform: scaleX(); This somehow is performance efficient but isn't covering the border well so using width and percent */
-    width: 100%;
-    border-radius: 4%;
-    transition: width .25s linear;
+  /* We are making a progress bar, and when scaleX is used it starts from center but we want it from start */
+  /* transform: scaleX(); This somehow is performance efficient but isn't covering the border well so using width and percent */
+  width: 100%;
+  border-radius: 4%;
+  transition: width 0.25s linear;
 
-    position: absolute;
-
+  position: absolute;
 }
 
-
-.progress-container .inner-container{
-    /* position: absolute; */
-    z-index: 1;
-    margin: 10px 15px;
-    /* width: 100%; Using this our progress bar goes out of bounds */
-    width: calc(100% - 30px);
+.progress-container .inner-container {
+  /* position: absolute; */
+  z-index: 1;
+  margin: 10px 15px;
+  /* width: 100%; Using this our progress bar goes out of bounds */
+  width: calc(100% - 30px);
 }
 
-
-.percent-container{
-    font-size: 13px;
-    margin: 5px;
-    opacity: .8;
+.percent-container {
+  font-size: 13px;
+  margin: 5px;
+  opacity: 0.8;
 }
 
+.progress-bar {
+  height: 3px;
+  width: 100%;
+  background: #03a9f4;
+  border-radius: 2px;
+  transform-origin: left;
 
-.progress-bar{
-    height: 3px;
-    width: 100%;
-    background: #03a9f4;
-    border-radius: 2px;
-    transform-origin: left;
-
-    transform: scaleX(0);
-    transition: transform 0.25 linear;
+  transform: scaleX(0);
+  transition: transform 0.25 linear;
 }
