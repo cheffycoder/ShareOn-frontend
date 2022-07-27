@@ -4,8 +4,8 @@
   /* --border-color: #0288d147; */
   --border-color: #fac53b;
   --container-width: 500px;
-  /* --light-yellow: #fac53b;
-    --dark-yellow: #fbb440; */
+  --light-yellow: #fce7b1;
+  --dark-yellow: #fbb440;
 }
 
 body,
@@ -119,16 +119,14 @@ body,
   display: none;
 }
 
-
 .progress-container .upload-progress {
   background-color: var(--border-color);
   width: 0%;
   height: 100%;
   border-radius: 4px;
 
-  transition: width .25s ease-in;
+  transition: width 0.25s ease-in;
 }
-
 
 .progress-container .inner-container {
   margin: 10px 15px;
@@ -138,4 +136,43 @@ body,
 .percent-container {
   font-size: 13px;
   opacity: 0.8;
+}
+
+.sharing-container {
+  width: var(--container-width);
+  margin-bottom: 10px;
+  /* Only when the file link is ready, change the display */
+  display: none;
+}
+
+#expiry-label{
+  opacity: 0.7;
+  text-align: center;
+  font-size: 13px;
+}
+
+.sharing-container .input-container{
+  position: relative;
+}
+
+.sharing-container .input-container input {
+  /* Box sizing used to keep padding inside */
+  box-sizing: border-box;
+
+  width: 100%;
+  border: 2px dashed var(--border-color);
+  border-radius: 3px;
+  padding: 8px 10px;
+  background: var(--light-yellow);
+
+  font-size: 13px;
+  color: #0000008c;
+}
+
+.input-container img{
+  position: absolute;
+  right: 7px;
+  top: 8px;
+  background: var(--light-yellow);
+  cursor: pointer;
 }

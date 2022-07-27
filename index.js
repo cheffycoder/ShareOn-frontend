@@ -6,6 +6,10 @@ const progressContainerElem = document.querySelector(".progress-container");
 const uploadProgressElem = document.querySelector(".upload-progress");
 const percentageValueElem = document.getElementById("percent-value");
 
+const sharingContainerElem = document.querySelector(".sharing-container");
+const copyFileURL_Elem = document.querySelector("#copyFileURL");
+const copyIconElem = document.querySelector("#copy-icon");
+
 const host = "https://innshare.herokuapp.com/";
 const uploadURL = `${host}api/files`;
 // const uploadURL = `${host}api/files`; //--> will use this later for uploading using email.
@@ -82,7 +86,7 @@ fileInputElem.addEventListener("change", () => {
  */
 const uploadFile = (file) => {
   // Showing the progress element as soon as someone uploads a file.
-  updateContainerElem(progressContainerElem, "show");
+  updateContainerElem(progressContainerElem, "flex");
 
   const formData = new FormData();
   formData.append("myfile", file);
@@ -104,8 +108,8 @@ const uploadFile = (file) => {
   xhr.send(formData);
 };
 
-const updateContainerElem = (element, action) => {
-  element.style.display = action === "show" ? "flex" : "none";
+const updateContainerElem = (element, displayValue) => {
+  element.style.display = displayValue;
 };
 
 const updateProgress = (event) => {
@@ -115,11 +119,23 @@ const updateProgress = (event) => {
   uploadProgressElem.style.width = `${uploadPercentage}%`;
 };
 
-const showDownloadLink = ({ file }) => {
-  console.log(file);
+const showDownloadLink = ({ file: fileDownloadLink }) => {
   // Closing the progressContainer as soon as the file is fully uploaded
-  updateContainerElem(progressContainerElem, "hide");
+  updateContainerElem(progressContainerElem, "none");
 
   // Also show the link Expiry text with the download link
+  updateContainerElem(sharingContainerElem, "block");
+  
+  copyFileURL_Elem.value = fileDownloadLink;
   // Also show the send link through email element
 };
+
+const copyToClipboard = () => {
+  // This will select the whole fileURL
+  copyFileURL_Elem.select;
+  // This will copy the whole selected value to the Clipboard
+  navigator.clipboard.writeText(copyFileURL_Elem.value);
+}
+
+copyIconElem.addEventListener("click", copyToClipboard);
+

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <title>ShareOn - Easy File Sharing</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <img src="Logo.png" alt="ShareOn logo" class="logo">
     <section class="upload-container">
@@ -15,7 +17,7 @@
             <div class="icon-container">
                 <img src="./file.svg" alt="file-icon" class="center" draggable="false">
                 <img src="./file.svg" alt="file-icon" class="left" draggable="false">
-                <img src="./file.svg" alt="file-icon" class="right" draggable="false">   
+                <img src="./file.svg" alt="file-icon" class="right" draggable="false">
             </div>
 
             <input type="file" id="file-input">
@@ -35,8 +37,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="sharing-container">
+            <p id="expiry-label">Link expires in 24 hours</p>
+            <!-- We don't want anyone to alter this text and made it readonly. -->
+            <div class="input-container">
+                <input type="text" id="copyFileURL" readonly>
+                <img src="./copy_icon.svg" alt="copy icon" id="copy-icon" width="20px">
+            </div>
+        </div>
     </section>
 
     <script src="index.js"></script>
 </body>
+
 </html>
