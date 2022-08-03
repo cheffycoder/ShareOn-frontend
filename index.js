@@ -10,9 +10,11 @@ const sharingContainerElem = document.querySelector(".sharing-container");
 const copyFileURL_Elem = document.querySelector("#copyFileURL");
 const copyIconElem = document.querySelector("#copy-icon");
 
+const emailFormElem = document.querySelector("#email-form");
+
 const host = "https://innshare.herokuapp.com/";
 const uploadURL = `${host}api/files`;
-// const uploadURL = `${host}api/files`; //--> will use this later for uploading using email.
+const emailURL = `${host}api/files/send`;
 
 // Adding the button to get the click for fileInputElem which is displayed none, and called click on hidden input field which will open file menu.
 browseBtnElem.addEventListener("click", () => {
@@ -96,7 +98,7 @@ const uploadFile = (file) => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       // Showing the download link to the user, response returns an object with file property containing the link.
-      showDownloadLink(JSON.parse(xhr.response));
+      onUploadSuccess(JSON.parse(xhr.response));
     }
   };
 
@@ -119,23 +121,61 @@ const updateProgress = (event) => {
   uploadProgressElem.style.width = `${uploadPercentage}%`;
 };
 
-const showDownloadLink = ({ file: fileDownloadLink }) => {
+const onUploadSuccess = ({ file: fileDownloadLink }) => {
   // Closing the progressContainer as soon as the file is fully uploaded
   updateContainerElem(progressContainerElem, "none");
 
+  // Removing the disabled attribute added with last transfer from the Send Email button
+  console.log(emailFormElem[2])
+  emailFormElem[2].removeAttribute("disabled");
+  // We also have to clear the fileInput that are there in the fileInputElem
+  fileInputElem.value="";
+
   // Also show the link Expiry text with the download link
   updateContainerElem(sharingContainerElem, "block");
-  
+
   copyFileURL_Elem.value = fileDownloadLink;
   // Also show the send link through email element
 };
 
 const copyToClipboard = () => {
   // This will select the whole fileURL
-  copyFileURL_Elem.select;
+  copyFileURL_Elem.select();
   // This will copy the whole selected value to the Clipboard
   navigator.clipboard.writeText(copyFileURL_Elem.value);
-}
+};
 
 copyIconElem.addEventListener("click", copyToClipboard);
 
+emailFormElem.addEventListener("submit", (event) => {
+  // This is to save the values going into the url.
+  event.preventDefault();
+
+  const fileDownloadLink = copyFileURL_Elem.value;
+  const uuid = fileDownloadLink.split("/").splice(-1, 1)[0];
+
+  const formData = {
+    uuid,
+    emailTo: emailFormElem.elements["to-email"].value,
+    emailFrom: emailFormElem.elements["from-email"].value,
+  };
+
+  // Disabling the form button, this will take the 3rd element of the email form and make it disabled.
+  emailFormElem[2].setAttribute("disabled", true);
+
+  // Send data in the form to the Backend
+  fetch(emailURL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then(({success}) => {
+      if(success){
+        // If email is sent successfully then hide the sharing container
+        updateContainerElem(sharingContainerElem, "none");
+      }
+    });
+});

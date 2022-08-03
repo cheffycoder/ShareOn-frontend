@@ -145,7 +145,7 @@ body,
   display: none;
 }
 
-#expiry-label{
+#expiry-label, #send-email-label{
   opacity: 0.7;
   text-align: center;
   font-size: 13px;
@@ -176,3 +176,52 @@ body,
   background: var(--light-yellow);
   cursor: pointer;
 }
+
+.email-container form{
+  font-size: 13px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 30px 50px;
+  margin: 20px 0px;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.email-container .field{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.email-container input{
+  /* This border is done none because by default border-style is set to inset. */
+  border: none;
+  border-bottom: 2px dotted var(--border-color);
+  text-align: center;
+  width: 230px;
+  color: #0000008c;
+}
+
+.email-container input:focus{
+  outline: none;
+  background: var(--light-yellow);
+}
+
+.email-container button{
+  cursor: pointer;
+  background: var(--main-bg-color);
+  border: 0.25px solid var(--border-color);
+  border-radius: 5px;
+  padding: 8px 40px;
+  margin-top: 15px;
+  color: #0000008c;
+  transition: 0.5s;;
+}
+
+.email-container button:hover{
+  background: var(--light-yellow);
+}
+
+
