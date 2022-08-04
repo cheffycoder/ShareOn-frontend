@@ -12,6 +12,8 @@ const copyIconElem = document.querySelector("#copy-icon");
 
 const emailFormElem = document.querySelector("#email-form");
 
+const toastElem = document.querySelector(".toast");
+
 const host = "https://innshare.herokuapp.com/";
 const uploadURL = `${host}api/files`;
 const emailURL = `${host}api/files/send`;
@@ -106,6 +108,14 @@ const uploadFile = (file) => {
 
   xhr.upload.addEventListener("progress", updateProgress);
 
+  // Adding toast if error occured while uploading files.
+  xhr.upload.onerror = () => {
+    // If there is an error in uplading file then we also have to clear the fileInput that are there in the fileInputElem
+    fileInputElem.value = "";
+
+    showToast(`Error in uploading file: ${xhr.statusText}`);
+  };
+
   xhr.open("POST", uploadURL);
   xhr.send(formData);
 };
@@ -126,10 +136,10 @@ const onUploadSuccess = ({ file: fileDownloadLink }) => {
   updateContainerElem(progressContainerElem, "none");
 
   // Removing the disabled attribute added with last transfer from the Send Email button
-  console.log(emailFormElem[2])
+  console.log(emailFormElem[2]);
   emailFormElem[2].removeAttribute("disabled");
   // We also have to clear the fileInput that are there in the fileInputElem
-  fileInputElem.value="";
+  fileInputElem.value = "";
 
   // Also show the link Expiry text with the download link
   updateContainerElem(sharingContainerElem, "block");
@@ -143,6 +153,7 @@ const copyToClipboard = () => {
   copyFileURL_Elem.select();
   // This will copy the whole selected value to the Clipboard
   navigator.clipboard.writeText(copyFileURL_Elem.value);
+  showToast("Link copied");
 };
 
 copyIconElem.addEventListener("click", copyToClipboard);
@@ -172,10 +183,27 @@ emailFormElem.addEventListener("submit", (event) => {
     body: JSON.stringify(formData),
   })
     .then((response) => response.json())
-    .then(({success}) => {
-      if(success){
+    .then(({ success }) => {
+      if (success) {
         // If email is sent successfully then hide the sharing container
         updateContainerElem(sharingContainerElem, "none");
+        showToast("Email sent");
       }
     });
 });
+
+// Clearing the toastTimeOut for the previous toast if it exists.
+let toastTimeoutID;
+
+const showToast = (message) => {
+  const toastVisibleTime = 2000;
+
+  toastElem.innerText = message;
+  toastElem.style.transform = "translateX(0%)";
+
+  clearTimeout(toastTimeoutID);
+
+  toastTimeoutID = setTimeout(() => {
+    toastElem.style.transform = "translateX(200%)";
+  }, toastVisibleTime);
+};

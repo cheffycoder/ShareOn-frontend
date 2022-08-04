@@ -16,6 +16,8 @@ html {
   height: 100%;
   padding: 0;
   margin: 0;
+  /* Hiding the toast */
+  overflow: hidden;
 }
 
 body,
@@ -222,6 +224,37 @@ body,
 
 .email-container button:hover{
   background: var(--light-yellow);
+}
+
+
+/* Toast */
+.toast{
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  /* Sending the toast 60px down to make it disappear */
+  transform: translateX(200%);
+  /* Centered the abosolute toast till now */
+
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: var(--dark-yellow);
+  color: var(--main-bg-color);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+  /* Adding Tranition */
+  transition: transform ease-in-out 0.2s;
+}
+
+
+
+/* Illustration */
+
+.illustration{
+  background: url('/sharing_illustration.svg') no-repeat center;
+  background-size: contain;
+  height: 15vh;
+  width: 25vw;
 }
 
 
