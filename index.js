@@ -133,8 +133,8 @@ const uploadFile = (file) => {
   xhr.upload.onerror = () => {
     // If there is an error in uplading file then we also have to clear the fileInput that are there in the fileInputElem
     resetFileInput();
-
     showToast(`Error in uploading file: ${xhr.statusText}`);
+    updateContainerElem(progressContainerElem, "none");
   };
 
   xhr.open("POST", uploadURL);
