@@ -18,6 +18,13 @@ const host = "https://innshare.herokuapp.com/";
 const uploadURL = `${host}api/files`;
 const emailURL = `${host}api/files/send`;
 
+
+const resetFileInput = () => {
+  fileInputElem.value = "";
+}
+
+const MAX_FILE_UPLOAD_SIZE = 100 * 1024 * 1024; // 100MB
+
 // Adding the button to get the click for fileInputElem which is displayed none, and called click on hidden input field which will open file menu.
 browseBtnElem.addEventListener("click", () => {
   // This click will trigger the fileMenu opener and as soon as we select a file, change event listener on fileInputElem is triggered to upload the selected file.
@@ -89,6 +96,20 @@ fileInputElem.addEventListener("change", () => {
  * We can access the response using xhr.response
  */
 const uploadFile = (file) => {
+
+  // If we upload more than 1 file tell user to upload only 1 file
+  if(fileInputElem.files.length > 1){
+    showToast("Please add a single file to upload");
+    resetFileInput();
+    return; // Returning because we want nothing ahead to run.
+  }
+
+  if(file.size > MAX_FILE_UPLOAD_SIZE){
+    showToast("File size cannot be more than 100MB");
+    resetFileInput();
+    return;
+  }
+
   // Showing the progress element as soon as someone uploads a file.
   updateContainerElem(progressContainerElem, "flex");
 
@@ -111,7 +132,7 @@ const uploadFile = (file) => {
   // Adding toast if error occured while uploading files.
   xhr.upload.onerror = () => {
     // If there is an error in uplading file then we also have to clear the fileInput that are there in the fileInputElem
-    fileInputElem.value = "";
+    resetFileInput();
 
     showToast(`Error in uploading file: ${xhr.statusText}`);
   };
@@ -139,7 +160,7 @@ const onUploadSuccess = ({ file: fileDownloadLink }) => {
   console.log(emailFormElem[2]);
   emailFormElem[2].removeAttribute("disabled");
   // We also have to clear the fileInput that are there in the fileInputElem
-  fileInputElem.value = "";
+  resetFileInput();
 
   // Also show the link Expiry text with the download link
   updateContainerElem(sharingContainerElem, "block");
