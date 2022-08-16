@@ -157,7 +157,6 @@ const onUploadSuccess = ({ file: fileDownloadLink }) => {
   updateContainerElem(progressContainerElem, "none");
 
   // Removing the disabled attribute added with last transfer from the Send Email button
-  console.log(emailFormElem[2]);
   emailFormElem[2].removeAttribute("disabled");
   // We also have to clear the fileInput that are there in the fileInputElem
   resetFileInput();
