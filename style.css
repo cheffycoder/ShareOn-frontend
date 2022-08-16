@@ -251,7 +251,7 @@ body,
 /* Illustration */
 
 .illustration{
-  background: url('/sharing_illustration.svg') no-repeat center;
+  background: url('/assets/sharing_illustration.svg') no-repeat center;
   background-size: contain;
   height: 15vh;
   width: 25vw;
