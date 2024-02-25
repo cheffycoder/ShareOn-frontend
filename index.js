@@ -18,10 +18,9 @@ const host = "https://share-on-backend.onrender.com/";
 const uploadURL = `${host}api/files`;
 const emailURL = `${host}api/files/send`;
 
-
 const resetFileInput = () => {
   fileInputElem.value = "";
-}
+};
 
 const MAX_FILE_UPLOAD_SIZE = 100 * 1024 * 1024; // 100MB
 
@@ -96,15 +95,14 @@ fileInputElem.addEventListener("change", () => {
  * We can access the response using xhr.response
  */
 const uploadFile = (file) => {
-
   // If we upload more than 1 file tell user to upload only 1 file
-  if(fileInputElem.files.length > 1){
+  if (fileInputElem.files.length > 1) {
     showToast("Please add a single file to upload");
     resetFileInput();
     return; // Returning because we want nothing ahead to run.
   }
 
-  if(file.size > MAX_FILE_UPLOAD_SIZE){
+  if (file.size > MAX_FILE_UPLOAD_SIZE) {
     showToast("File size cannot be more than 100MB");
     resetFileInput();
     return;
@@ -208,6 +206,7 @@ emailFormElem.addEventListener("submit", (event) => {
         // If email is sent successfully then hide the sharing container
         updateContainerElem(sharingContainerElem, "none");
         showToast("Email sent");
+        emailFormElem.reset();
       }
     });
 });
